@@ -1,23 +1,25 @@
-# Use the official Node.js image as a base image
-FROM node:14
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+# Stage 1: Build
+FROM node:16-alpine as build
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+WORKDIR /app
 
-# Install the dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the application files
 COPY . .
 
-# Expose the port the app runs on
+# Stage 2: Run
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY --from=build /app /app
+
 EXPOSE 3000
 
-# Define environment variables
-ENV PORT=3000
 
-# Command to run the application
+# Define environment variables
+# ENV PORT=3000
+
 CMD ["node", "server.js"]
