@@ -20,3 +20,10 @@ Type: Custom TCP
 Port Range: 3000
 Source: Anywhere (0.0.0.0/0) 
 Click Save rules.
+
+to access go to your browser 
+```
+#to fetch all students 
+publicIP/api/v1/students
+```
+
